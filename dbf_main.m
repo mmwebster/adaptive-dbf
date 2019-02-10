@@ -1,5 +1,35 @@
-% create array with wavelength of 2m, 8 sensors/receivers, .5m spacing,
-% null pose, and fs=1kHz
-array = Array(2, 8, .5, 1, 1e3)
+% cleanup
+clear all
+close all
+pause on
 
-array2 = Array(2, 8, .5, 1, 1e3)
+% setup the world
+worldWidth = 40;
+worldHeight = 40;
+% create the world
+world = World(worldWidth, worldHeight)
+
+% @NOTE current array configuration does not consider real limits on digital
+%       sampling frequency (DDC simulation performed in future iteration)
+% setup the array for the VHF 2m amateur radio band (144-148Mhz)
+arrayWavelength = 2.05337; % 146Mhz center of band
+arrayNumSensors = 8; % sensors/receivers
+arraySpacing = .5; % meters between each receiver in linear array
+arrayPoseX = world.width/2; % center X (m)
+arrayPoseY = world.height/2; % center Y (m)
+arrayPoseT = 0; % parallel to X (rads)
+arrayPose = Pose(arrayPoseX, arrayPoseY, arrayPoseT);
+nyquistFs = 148e6; % set nyquist at top of the band (exactly 2x b/c not sampling
+                   % at nyquist)
+arrayFs = nyquistFs * 10; % sample at 10x nyquist
+% create the array
+array = Array(arrayWavelength, arrayNumSensors, arraySpacing, arrayPose, arrayFs)
+
+% update the array in the world, then draw the world
+for i=1:50
+  world.updateArray(array);
+  world.drawTo(1);
+  pause(.02);
+  array.pose.x = array.pose.x - .2;
+  array.pose.y = array.pose.y + .2;
+end
