@@ -25,11 +25,19 @@ arrayFs = nyquistFs * 10; % sample at 10x nyquist
 % create the array
 array = Array(arrayWavelength, arrayNumSensors, arraySpacing, arrayPose, arrayFs)
 
-% update the array in the world, then draw the world
+% one degree in radians
+degRad = 2*pi/360;
+
+% update the array in the world, then re-draw the world
 for i=1:50
   world.updateArray(array);
   world.drawTo(1);
   pause(.02);
+  % move it
   array.pose.x = array.pose.x - .2;
   array.pose.y = array.pose.y + .2;
+  % spin it
+  array.pose.theta = array.pose.theta + 10*degRad;
+  % bop it
+  array.spacing = array.spacing + .03;
 end
