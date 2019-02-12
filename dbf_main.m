@@ -19,8 +19,8 @@ arrayPoseX = world.width/2; % center X (m)
 arrayPoseY = world.height/2; % center Y (m)
 arrayPoseT = 0; % parallel to X (rads)
 arrayPose = Pose(arrayPoseX, arrayPoseY, arrayPoseT);
-nyquistFs = 148e6; % set nyquist at top of the band (exactly 2x b/c not sampling
-                   % at nyquist)
+nyquistFs = 148e6 * 2; % set nyquist at top of the band (exactly 2x b/c not
+                       % sampling AT nyquist)
 arrayFs = nyquistFs * 10; % sample at 10x nyquist
 % create the array
 array = Array(arrayWavelength, arrayNumSensors, arraySpacing, arrayPose, arrayFs)
