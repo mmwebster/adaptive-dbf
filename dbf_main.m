@@ -13,6 +13,7 @@ world = World(worldWidth, worldHeight)
 %       sampling frequency (DDC simulation performed in future iteration)
 % setup the array for the VHF 2m amateur radio band (144-148Mhz)
 arrayWavelength = 2.05337; % 146Mhz center of band
+% @TODO fix bug — array only works with even-numbered elements
 arrayNumSensors = 8; % sensors/receivers
 arraySpacing = .5; % meters between each receiver in linear array
 arrayPoseX = world.width/2; % center X (m)
